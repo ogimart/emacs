@@ -1,16 +1,16 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GIT
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPANY
 
 ;; global company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CLOJURE
 
 ;; start clojure repl key bind <C-c j>
@@ -22,11 +22,6 @@
 ;; bind <RET> to auto-indent <C-j>
 (add-hook 'clojure-mode-hook
   '(lambda () (local-set-key (kbd "RET") 'newline-and-indent)))
-
-;; fill column
-(add-hook 'clojure-mode-hook
-          (lambda ()
-            (set-fill-column 80)))
 
 ;; syntax color in repl
 (setq cider-repl-use-clojure-font-lock t)
@@ -40,7 +35,7 @@
 (add-hook 'cider-mode-hook #'company-mode)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PYTHON
 
 ;; virtual env
@@ -94,14 +89,6 @@
 ;; code check
 (add-hook 'python-mode-hook 'flycheck-mode)
 
-;; django pony-mode
-;; (require 'pony-mode)
-;; (defun my-pony-shell()
-;;   (interactive)
-;;   (if (pony-command-exists "shell_plus")
-;;       (setq command "shell_plus")
-;;     (setq command "shell")))
-
 ;; tabs
 (add-hook 'python-mode-hook
       (lambda ()
@@ -139,7 +126,7 @@
 (setenv "NODE_NO_READLINE" "1")
 (setq js2-include-node-externs t)
 (defun pretty-print-json(&optional b e)
-  "Shells out to Python to pretty print JSON" 
+  "Shells out to Python to pretty print JSON"
   (interactive "r")
   (shell-command-on-region b e "python -m json.tool" (current-buffer) t))
 ;; (add-to-list 'company-backends 'company-tern)
@@ -156,5 +143,27 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISC.
 
+;; rainbow parenthesis
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
+;; white space
+(setq-default whitespace-line-column 80
+              whitespace-style '(face lines-tail trailing))
+(add-hook 'prog-mode-hook #'whitespace-mode)
+
+;; pretty symbols
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (push '("lambda" . 955) prettify-symbols-alist)))
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\)("
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "λ") nil))))))
+(add-hook 'python-mode-hook
+          (lambda ()
+            (push '("lambda" . 955) prettify-symbols-alist)))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (push '("function" . ?ƒ) prettify-symbols-alist)))
+(global-prettify-symbols-mode t)

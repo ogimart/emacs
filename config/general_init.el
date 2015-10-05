@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS X
 
 ;; (setq mac-command-modifier 'meta)             ; <M->
@@ -15,9 +15,8 @@
 (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GENERAL 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GENERAL
 
 ;; take the short answer y/n is yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -45,7 +44,7 @@
 (setq vc-follow-symlinks t)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOOK
 
 ;; turn off: tool bar, scroll bar, menu bar and splash screen
@@ -56,8 +55,13 @@
 
 ;; colors
 (setq ns-use-srgb-colorspace t)
-;; (load-theme 'solarized-light t)
-(load-theme 'solarized-dark t)
+(defun set-day-theme ()
+  (interactive)
+  (load-theme 'solarized-light t))
+(defun set-night-theme ()
+  (interactive)
+  (load-theme 'solarized-dark t))
+(set-day-theme)
 
 ;; font
 (defun set-laptop-font ()
@@ -80,36 +84,18 @@
 (setq visible-bell nil
       ring-bell-function 'my-visible-bell)
 
-;; pretty symbols
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (push '("lambda" . 955) prettify-symbols-alist)))
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("\\(#\\)("
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "λ") nil))))))
-(add-hook 'python-mode-hook
-          (lambda ()
-            (push '("lambda" . 955) prettify-symbols-alist)))
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (push '("function" . ?ƒ) prettify-symbols-alist)))
-(global-prettify-symbols-mode t)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BACKUP FILES
 
 (defvar --backup-dir (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-dir))
         (make-directory --backup-dir t))
 (setq backup-directory-alist `(("." . ,--backup-dir)))
-(setq make-backup-files t               ; backup of a file the first time it is saved.
-      backup-by-copying t               ; copy
-      version-control t                 ; version numbers for backup files
-      delete-old-versions t             ; delete excess backup files silently
-      delete-by-moving-to-trash t       ; move to trash
-      auto-save-default t               ; auto-save every buffer that visits a file
+(setq make-backup-files t          ; backup of a file the first time it is saved
+      backup-by-copying t          ; copy
+      version-control t            ; version numbers for backup files
+      delete-old-versions t        ; delete excess backup files silently
+      delete-by-moving-to-trash t  ; move to trash
+      auto-save-default t          ; auto-save every buffer that visits a file
       )
-
