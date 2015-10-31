@@ -55,21 +55,21 @@
 
 ;; colors
 (setq ns-use-srgb-colorspace t)
-(defun set-day-theme ()
-  (interactive)
-  (load-theme 'solarized-light t))
-(defun set-night-theme ()
-  (interactive)
-  (load-theme 'solarized-dark t))
-(set-day-theme)
+(load-theme 'noctilux t)
+
+;; paren match
+(set-face-background 'show-paren-match (face-background 'default))
+(set-face-background 'show-paren-match "#2f4f4f")
+(set-face-attribute 'show-paren-match-face nil
+                    :weight 'bold :underline nil)
 
 ;; font
 (defun set-laptop-font ()
   (interactive)
-  (set-default-font "Consolas-13"))
+  (set-default-font "Consolas-11"))
 (defun set-monitor-font ()
   (interactive)
-  (set-default-font "Consolas-15"))
+  (set-default-font "Consolas-13"))
 (set-default-font () (set-laptop-font))
 
 ;; default frame size
@@ -77,12 +77,17 @@
   (width . 120)
   (height . 48)))
 
-;; turn off visual bell
+;; visual bell
 (defun my-visible-bell ()
   (invert-face 'mode-line)
   (run-with-timer 0.1 nil 'invert-face 'mode-line))
 (setq visible-bell nil
       ring-bell-function 'my-visible-bell)
+
+;; vertical border
+(set-face-attribute 'vertical-border
+                    nil
+                    :foreground "grey13")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

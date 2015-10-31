@@ -34,6 +34,9 @@
 (add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
 
+;; boot
+(add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PYTHON
@@ -143,8 +146,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISC.
 
+;; project explorer
+(require 'project-explorer)
+(setq pe/cache-directory "~/.emacs.d/cache/project_explorer")
+(setq pe/omit-regex (concat pe/omit-regex "\\|.pyc"))
+
+;; rest client
+(add-to-list 'auto-mode-alist '("\.rest$" . restclient-mode))
+
 ;; rainbow parenthesis
+(require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(set-face-attribute 'rainbow-delimiters-depth-4-face nil
+                    :foreground "navajo white")
+(set-face-attribute 'rainbow-delimiters-depth-8-face nil
+                    :foreground "goldenrod")
 
 ;; white space
 (setq-default whitespace-line-column 80

@@ -13,14 +13,14 @@
 
 ;; package.el
 (require 'package)
-;(add-to-list 'package-archives
-;             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
-;(add-to-list 'package-archives
-;             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
 (setq package-enable-at-startup nil)
 (package-initialize)
 
@@ -49,7 +49,7 @@
     ;; web
     restclient
     ;; themes
-    solarized-theme rainbow-delimiters
+    noctilux-theme rainbow-delimiters
     ;; osx
     exec-path-from-shell))
 
@@ -71,6 +71,8 @@
 ;; programming (company, git, clojure, python, lisp, sql)
 (load "~/.emacs.d/config/program_init.el")
 
+;; org-mode
+(load "~/.emacs.d/config/orgmode_init.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SERVER
@@ -81,4 +83,5 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; EMACS GENERATED CUSTOM SET
+
 
