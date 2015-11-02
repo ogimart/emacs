@@ -32,8 +32,7 @@
 (global-set-key (kbd "M-o") 'open-previous-line)
 
 ;; Autoindent open-*-lines
-(defvar newline-and-indent t
-  "Modify the behavior of the open-*-line functions to cause them to autoindent.")
+(defvar newline-and-indent t)
 
 ;; move line up
 (defun move-line-up ()
@@ -49,6 +48,10 @@
   (transpose-lines 1)
   (previous-line 1))
 (global-set-key (kbd "M-n") 'move-line-down)
+
+;; switch buffers
+(global-set-key (kbd "M-[") 'previous-buffer)
+(global-set-key (kbd "M-]") 'next-buffer)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

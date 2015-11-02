@@ -149,7 +149,9 @@
 ;; project explorer
 (require 'project-explorer)
 (setq pe/cache-directory "~/.emacs.d/cache/project_explorer")
-(setq pe/omit-regex (concat pe/omit-regex "\\|.pyc"))
+(setq pe/omit-regex (concat pe/omit-regex "\\|.pyc" "\\|.class"))
+(global-set-key (kbd "C-!") 'project-explorer-open)
+(global-set-key (kbd "C-|") 'project-explorer-helm)
 
 ;; rest client
 (add-to-list 'auto-mode-alist '("\.rest$" . restclient-mode))
