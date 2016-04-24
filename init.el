@@ -48,12 +48,9 @@
     ;; javascript
     js2-mode js-comint ;tern company-tern
     ;; web
-    restclient
+    markdown-mode restclient
     ;; themes & colors
-    atom-one-dark-theme
-    ;DEL: rainbow-delimiters rainbow-identifiers
-    highlight-numbers highlight-quoted
-    paren-face
+    atom-one-dark-theme highlight-numbers highlight-quoted paren-face
     ;; osx
     exec-path-from-shell))
 

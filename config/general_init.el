@@ -95,13 +95,17 @@
 (add-hook 'emacs-lisp-mode-hook 'paren-face-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ZSH
+;; MODES
 
+;; zsh
 (add-to-list 'auto-mode-alist '("\\.zsh$'" . sh-mode))
 (add-hook 'sh-mode-hook
           (lambda ()
             (if (string-match "\\.zsh$" buffer-file-name)
                 (sh-set-shell "zsh"))))
+
+;; markdown mode for gitghub
+(add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BACKUP FILES
