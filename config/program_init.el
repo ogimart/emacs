@@ -64,21 +64,30 @@
 (setq-default mode-line-format
               (cons '(:exec venv-current-name) mode-line-format))
 
-;; ipython
+;; interpeter: ipython / django shell_plus
 (setq python-shell-interpreter "ipython")
+(defvar shell-plus nil)
+(defun shell-plus-toggle ()
+  (interactive)
+  (cond ((eq shell-plus nil)
+         (setq python-shell-interpreter "python"
+               python-shell-interpreter-args
+               (concat (pe/project-root-function-default)
+                       "manage.py shell_plus")
+               shell-plus t)
+         (message "interpreter: python manage.py shell_plus"))
+        ((eq shell-plus t)
+         (setq python-shell-interpreter "ipython"
+               python-shell-interpreter-args ""
+               shell-plus nil)
+         (message "interpreter: ipython"))))
 
 ;; ipdb
 (defun ipdb:insert-trace (arg)
   (interactive "p")
   (open-previous-line arg)
-  (insert "import ipdb; ipdb.set_trace()"))
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "C-c C-t") 'ipdb:insert-trace)))
-(defun ipdb:highlight-trace ()
-  (interactive)
-  (highlight-lines-matching-regexp "import ipdb; ipdb.set_trace()"))
-(add-hook 'python-mode-hook 'ipdb:highlight-trace)
+  (insert "import ipdb; ipdb.set_trace()")
+  (highlight-lines-matching-regexp "^[ ]*import ipdb; ipdb.set_trace()"))
 
 ;; python completion
 (add-hook 'python-mode-hook
@@ -101,9 +110,11 @@
             (goto-char (nth 1 p))))))
 (add-hook 'python-mode-hook
           '(lambda ()
-             (local-set-key (kbd "C-.") 'jedi:jump-to-definition)
-             (local-set-key (kbd "C-,") 'jedi:jump-back)
-             (local-set-key (kbd "C-c d") 'jedi:show-doc)))
+             (local-set-key (kbd "C-c C-g") 'shell-plus-toggle)
+             (local-set-key (kbd "C-c C-t") 'ipdb:insert-trace)
+             (local-set-key (kbd "C-c C-d") 'jedi:jump-to-definition)
+             (local-set-key (kbd "C-c C-b") 'jedi:jump-back)
+             (local-set-key (kbd "C-c C-k") 'jedi:show-doc)))
 
 ;; Code check
 (add-hook 'python-mode-hook 'flycheck-mode)
