@@ -5,7 +5,6 @@
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGE MANAGEMENT
 
@@ -30,7 +29,9 @@
 
 ;; packages
 (defvar my-packages
-  '(;; helm
+  '(;; evil
+    evil
+    ;; helm
     helm helm-ag helm-projectile
     ;; git
     magit
@@ -38,18 +39,21 @@
     company flycheck
     ;; project
     projectile project-explorer
-    ;; clojure
+    ;; common lisp
+    slime slime-company
+     ;; clojure
     clojure-mode cider
     ;; python
     company-jedi virtualenvwrapper
-    ;; lisp
-    slime slime-company
     ;; javascript
     js2-mode js-comint ;tern company-tern
     ;; web
     restclient
-    ;; themes
-    noctilux-theme rainbow-delimiters
+    ;; themes & colors
+    atom-one-dark-theme
+    ;DEL: rainbow-delimiters rainbow-identifiers
+    highlight-numbers highlight-quoted
+    paren-face
     ;; osx
     exec-path-from-shell))
 
@@ -58,21 +62,26 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INIT FILES
 
-;; general and look settings
+;; general settings
 (load "~/.emacs.d/config/general_init.el")
 
 ;; key bindings, helm
 (load "~/.emacs.d/config/keybind_init.el")
 
-;; programming (company, git, clojure, python, lisp, sql)
+;; programming (company, git, common lisp, clojure, python, sql, js)
 (load "~/.emacs.d/config/program_init.el")
 
 ;; org-mode
 (load "~/.emacs.d/config/orgmode_init.el")
+
+;; helm, projectile, project explorer
+(load "~/.emacs.d/config/project_init.el")
+
+;; key bindings, evil mode
+(load "~/.emacs.d/config/keybind_init.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SERVER
@@ -80,8 +89,6 @@
 ;; start emacs server
 (server-start)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; EMACS GENERATED CUSTOM SET
-
 

@@ -43,7 +43,6 @@
 ;; follow symbolic links
 (setq vc-follow-symlinks t)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOOK
 
@@ -55,22 +54,23 @@
 
 ;; colors
 (setq ns-use-srgb-colorspace t)
-(load-theme 'noctilux t)
+;(load-theme 'noctilux t)
+(load-theme 'atom-one-dark t)
 
-;; paren match
-(set-face-background 'show-paren-match (face-background 'default))
-(set-face-background 'show-paren-match "#2f4f4f")
+;; cursor & paren match
+(blink-cursor-mode 0)
 (set-face-attribute 'show-paren-match-face nil
-                    :weight 'bold :underline nil)
+                    :foreground "white smoke"
+                    :background "dim grey")
 
 ;; font
-(defun set-laptop-font ()
+(defun set-small-font ()
   (interactive)
-  (set-default-font "Consolas-11"))
-(defun set-monitor-font ()
+  (set-default-font "Inconsolata for Powerline-14"))
+(defun set-large-font ()
   (interactive)
-  (set-default-font "Consolas-13"))
-(set-default-font () (set-laptop-font))
+  (set-default-font "Inconsolata for Powerline-16"))
+(set-default-font () (set-small-font))
 
 ;; default frame size
 (setq default-frame-alist '(
@@ -89,6 +89,19 @@
                     nil
                     :foreground "grey13")
 
+;; emacs lisp
+(add-hook 'emacs-lisp-mode-hook 'highlight-numbers-mode)
+(add-hook 'emacs-lisp-mode-hook 'highlight-quoted-mode)
+(add-hook 'emacs-lisp-mode-hook 'paren-face-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ZSH
+
+(add-to-list 'auto-mode-alist '("\\.zsh$'" . sh-mode))
+(add-hook 'sh-mode-hook
+          (lambda ()
+            (if (string-match "\\.zsh$" buffer-file-name)
+                (sh-set-shell "zsh"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BACKUP FILES

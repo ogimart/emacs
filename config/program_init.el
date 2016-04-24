@@ -9,6 +9,18 @@
 ;; global company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMMON LISP
+
+;; slime
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(setq slime-contribs '(slime-fancy))
+(slime-setup '(slime-company))
+
+;; paren face mode, highlight numbers and quote
+(add-hook 'lisp-mode-hook 'highlight-numbers-mode)
+(add-hook 'lisp-mode-hook 'highlight-quoted-mode)
+(add-hook 'lisp-mode-hook 'paren-face-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CLOJURE
@@ -16,16 +28,21 @@
 ;; start clojure repl key bind <C-c j>
 (global-set-key (kbd "C-c j") 'cider-jack-in)
 
-;; enamble eldoc mode
+;; enable eldoc mode
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
 ;; bind <RET> to auto-indent <C-j>
 (add-hook 'clojure-mode-hook
   '(lambda () (local-set-key (kbd "RET") 'newline-and-indent)))
 
+;; paren face mode, highlight numbers and quote
+(add-hook 'clojure-mode-hook 'highlight-numbers-mode)
+(add-hook 'clojure-mode-hook 'highlight-quoted-mode)
+(add-hook 'clojure-mode-hook 'paren-face-mode)
+
 ;; syntax color in repl
 (setq cider-repl-use-clojure-font-lock t)
-(add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+;(add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
 
 ;; associate clojurescript with clojure mode
 (add-to-list 'auto-mode-alist '("\.cljs$" . clojure-mode))
@@ -36,7 +53,6 @@
 
 ;; boot
 (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PYTHON
@@ -89,7 +105,7 @@
              (local-set-key (kbd "C-,") 'jedi:jump-back)
              (local-set-key (kbd "C-c d") 'jedi:show-doc)))
 
-;; code check
+;; Code check
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 ;; tabs
@@ -98,7 +114,6 @@
         (setq indent-tabs-mode nil)
         (setq tab-width 4)
         (setq python-indent 4)))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SQL
@@ -110,7 +125,6 @@
 (setq sql-postgres-login-params
       '((server :default "localhost")
         (port :default 5432)))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; JAVASCRIPT & NODE
@@ -134,35 +148,11 @@
   (shell-command-on-region b e "python -m json.tool" (current-buffer) t))
 ;; (add-to-list 'company-backends 'company-tern)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; COMMON LISP
-
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
-(setq slime-contribs '(slime-fancy))
-(slime-setup '(slime-company))
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISC.
 
-;; project explorer
-(require 'project-explorer)
-(setq pe/cache-directory "~/.emacs.d/cache/project_explorer")
-(setq pe/omit-regex (concat pe/omit-regex "\\|.pyc" "\\|.class"))
-(global-set-key (kbd "C-!") 'project-explorer-open)
-(global-set-key (kbd "C-|") 'project-explorer-helm)
-
 ;; rest client
 (add-to-list 'auto-mode-alist '("\.rest$" . restclient-mode))
-
-;; rainbow parenthesis
-(require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-(set-face-attribute 'rainbow-delimiters-depth-4-face nil
-                    :foreground "navajo white")
-(set-face-attribute 'rainbow-delimiters-depth-8-face nil
-                    :foreground "goldenrod")
 
 ;; white space
 (setq-default whitespace-line-column 80
@@ -170,18 +160,6 @@
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
 ;; pretty symbols
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (push '("lambda" . 955) prettify-symbols-alist)))
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("\\(#\\)("
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "λ") nil))))))
-(add-hook 'python-mode-hook
-          (lambda ()
-            (push '("lambda" . 955) prettify-symbols-alist)))
 (add-hook 'js2-mode-hook
           (lambda ()
             (push '("function" . ?ƒ) prettify-symbols-alist)))
-(global-prettify-symbols-mode t)
