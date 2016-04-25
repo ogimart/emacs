@@ -12,14 +12,14 @@
 
 ;; package.el
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+(setq package-archives
+      '(
+        ("marmalade" . "http://marmalade-repo.org/packages/")
+        ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")
+        ("melpa" . "http://melpa.org/packages/")
+        ))
 (setq package-enable-at-startup nil)
 (package-initialize)
 
@@ -30,27 +30,24 @@
 ;; packages
 (defvar my-packages
   '(;; evil
-    evil
+    evil evil-leader
+    ;; project
+    projectile magit
     ;; helm
     helm helm-ag helm-projectile
-    ;; git
-    magit
     ;; completion & syntax
     company flycheck
-    ;; project
-    projectile project-explorer
     ;; common lisp
     slime slime-company
      ;; clojure
     clojure-mode cider
     ;; python
     company-jedi virtualenvwrapper
-    ;; javascript
-    js2-mode js-comint ;tern company-tern
     ;; web
     markdown-mode restclient
-    ;; themes & colors
-    atom-one-dark-theme highlight-numbers highlight-quoted paren-face
+    ;; themes colors faces and modelines
+    atom-one-dark-theme smart-mode-line
+    highlight-numbers highlight-quoted paren-face
     ;; osx
     exec-path-from-shell))
 

@@ -77,6 +77,11 @@
   (width . 120)
   (height . 48)))
 
+;; mode line
+(setq sml/no-confirm-load-theme t)
+(setq sml/theme 'respectful)
+(sml/setup)
+
 ;; visual bell
 (defun my-visible-bell ()
   (invert-face 'mode-line)

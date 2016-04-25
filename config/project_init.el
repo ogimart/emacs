@@ -33,10 +33,6 @@
 (helm-projectile-on)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PROJECT EXPLORER
+;; GIT
 
-(require 'project-explorer)
-(setq pe/cache-directory "~/.emacs.d/cache/project_explorer")
-(setq pe/omit-regex (concat pe/omit-regex "\\|.pyc" "\\|.class"))
-(global-set-key (kbd "C-!") 'project-explorer-open)
-(global-set-key (kbd "C-|") 'project-explorer-helm)
+(global-set-key (kbd "C-x g") 'magit-status)

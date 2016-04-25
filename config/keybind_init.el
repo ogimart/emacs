@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; KEY BINDINGS
+;; KEY BINDINGS EMACS MODE
 
 ;; join the current line with the line beneath it
 (defun top-join-line ()
@@ -57,13 +57,31 @@
 ;; EVIL MODE
 
 (require 'evil)
+(global-evil-leader-mode)
 (evil-mode 1)
-(define-key evil-normal-state-map (kbd ",f") 'projectile-find-file)
-(define-key evil-normal-state-map (kbd ",,") 'evil-buffer)
-(define-key evil-normal-state-map (kbd ",a") 'helm-ag)
-(define-key evil-normal-state-map (kbd ",b") 'helm-mini)
-(define-key evil-normal-state-map (kbd ",k") 'kill-buffer)
-(define-key evil-normal-state-map (kbd ",r") 'package-refresh-contents)
-(define-key evil-normal-state-map (kbd ",p") 'package-list-packages)
-(define-key evil-normal-state-map (kbd ",m") 'helm-M-x)
-(define-key evil-normal-state-map (kbd "q") nil)
+
+;; normal mode
+;(define-key evil-normal-state-map (kbd ",f") 'projectile-find-file)
+;(define-key evil-normal-state-map (kbd ",,") 'evil-buffer)
+;(define-key evil-normal-state-map (kbd ",a") 'helm-ag)
+;(define-key evil-normal-state-map (kbd ",b") 'helm-mini)
+;(define-key evil-normal-state-map (kbd ",k") 'kill-buffer)
+;(define-key evil-normal-state-map (kbd ",r") 'package-refresh-contents)
+;(define-key evil-normal-state-map (kbd ",p") 'package-list-packages)
+;(define-key evil-normal-state-map (kbd ",m") 'helm-M-x)
+;(define-key evil-normal-state-map (kbd "q") nil)
+
+;; leader bindings
+(evil-leader/set-leader "<SPC>")
+(evil-leader/set-key
+  "e" 'find-file
+  "s" 'eshell
+  "f" 'projectile-find-file
+  "a" 'helm-ag
+  "b" 'helm-mini
+  "k" 'kill-buffer
+  "r" 'package-refresh-contents
+  "p" 'package-list-packages
+  "m" 'helm-M-x
+  "[" 'previous-buffer
+  "]" 'next-buffer)

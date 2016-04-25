@@ -1,9 +1,4 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; GIT
-
-(global-set-key (kbd "C-x g") 'magit-status)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPANY
 
 ;; global company-mode
@@ -70,15 +65,13 @@
 (defun shell-plus-toggle ()
   (interactive)
   (cond ((eq shell-plus nil)
-         (setq python-shell-interpreter "python"
-               python-shell-interpreter-args
-               (concat (pe/project-root-function-default)
+         (setq python-shell-interpreter-args
+               (concat (projectile-project-root)
                        "manage.py shell_plus")
                shell-plus t)
-         (message "interpreter: python manage.py shell_plus"))
+         (message "interpreter: ipython manage.py shell_plus"))
         ((eq shell-plus t)
-         (setq python-shell-interpreter "ipython"
-               python-shell-interpreter-args ""
+         (setq python-shell-interpreter-args ""
                shell-plus nil)
          (message "interpreter: ipython"))))
 
@@ -138,28 +131,6 @@
         (port :default 5432)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; JAVASCRIPT & NODE
-
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
-;; (add-hook 'js-mode-hook 'js2-minor-mode)
-(setq inferior-js-program-command "node")
-(add-hook 'js2-mode-hook
-          '(lambda ()
-             (local-set-key "\C-x\C-e" 'js-send-last-sexp)
-             (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
-             (local-set-key "\C-cb" 'js-send-buffer)
-             (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
-             (local-set-key "\C-cl" 'js-load-file-and-go)))
-(setenv "NODE_NO_READLINE" "1")
-(setq js2-include-node-externs t)
-(defun pretty-print-json(&optional b e)
-  "Shells out to Python to pretty print JSON"
-  (interactive "r")
-  (shell-command-on-region b e "python -m json.tool" (current-buffer) t))
-;; (add-to-list 'company-backends 'company-tern)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISC.
 
 ;; rest client
@@ -169,8 +140,3 @@
 (setq-default whitespace-line-column 80
               whitespace-style '(face lines-tail trailing))
 (add-hook 'prog-mode-hook #'whitespace-mode)
-
-;; pretty symbols
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (push '("function" . ?ƒ) prettify-symbols-alist)))
