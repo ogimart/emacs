@@ -43,6 +43,9 @@
 ;; follow symbolic links
 (setq vc-follow-symlinks t)
 
+;; turn on eldoc mode
+;(global-eldoc-mode 1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOOK
 

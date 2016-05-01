@@ -14,11 +14,11 @@
 (require 'package)
 (setq package-archives
       '(
-        ("marmalade" . "http://marmalade-repo.org/packages/")
+        ;("marmalade" . "http://marmalade-repo.org/packages/")
         ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-        ("gnu" . "https://elpa.gnu.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")
-        ("melpa" . "http://melpa.org/packages/")
+        ;("gnu" . "https://elpa.gnu.org/packages/")
+        ;("org" . "http://orgmode.org/elpa/")
+        ;("melpa" . "http://melpa.org/packages/")
         ))
 (setq package-enable-at-startup nil)
 (package-initialize)
@@ -30,17 +30,17 @@
 ;; packages
 (defvar my-packages
   '(;; evil
-    evil evil-leader
+    evil
     ;; project
-    projectile magit
+    projectile project-explorer magit
     ;; helm
-    helm helm-ag helm-projectile
+    helm helm-ag helm-projectile cljr-helm
     ;; completion & syntax
     company flycheck
     ;; common lisp
     slime slime-company
      ;; clojure
-    clojure-mode cider
+    clojure-mode cider clj-refactor
     ;; python
     company-jedi virtualenvwrapper
     ;; web

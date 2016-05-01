@@ -24,7 +24,12 @@
 (global-set-key (kbd "C-c j") 'cider-jack-in)
 
 ;; enable eldoc mode
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+
+;; refactoring
+(add-hook 'clojure-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "C-c C-r") 'cljr-helm)))
 
 ;; bind <RET> to auto-indent <C-j>
 (add-hook 'clojure-mode-hook
@@ -119,16 +124,41 @@
         (setq tab-width 4)
         (setq python-indent 4)))
 
+(add-hook 'python-mode-hook 'turn-on-eldoc-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SQL
+;;
+;; The sql-connection.el file should have the folllowing:
+;;
+;; (setq sql-connection-alist
+;;       '((pg-local-conn (sql-product 'postgres)
+;;                        (sql-port 5432)
+;;                        (sql-server "localhost")
+;;                        (sql-user "user")
+;;                        (sql-password "pass")
+;;                        (sql-database "db"))))
+;;
+;; (defun sql:pg-local-server ()
+;;   (interactive)
+;;   (setq sql-product 'postgres)
+;;   (sql-connect 'pg-local-conn))
+;;
+;; (defvar sql:servers-list
+;;   '(("local lms" sql:pg-local-server)))
+;;
+;; Postgres specific: create ~/.pgpass file in format:
+;; host:port:db:user:password
+
+(load "~/.emacs.d/config/sql-connection.el")
+
+(defun sql:server-connect (func)
+  (interactive (helm-comp-read "Select server: " sql:servers-list))
+  (funcall func))
 
 (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (toggle-truncate-lines t)))
-
-(setq sql-postgres-login-params
-      '((server :default "localhost")
-        (port :default 5432)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISC.

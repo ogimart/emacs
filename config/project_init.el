@@ -32,6 +32,12 @@
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 
+ ;; project explorer
+(require 'project-explorer)
+(setq pe/cache-directory "~/.emacs.d/cache/project_explorer")
+(setq pe/omit-regex (concat pe/omit-regex "\\|.pyc" "\\|.class"))
+(global-set-key (kbd "C-|") 'project-explorer-open)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GIT
 

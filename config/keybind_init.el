@@ -57,31 +57,54 @@
 ;; EVIL MODE
 
 (require 'evil)
-(global-evil-leader-mode)
 (evil-mode 1)
 
 ;; normal mode
-;(define-key evil-normal-state-map (kbd ",f") 'projectile-find-file)
-;(define-key evil-normal-state-map (kbd ",,") 'evil-buffer)
-;(define-key evil-normal-state-map (kbd ",a") 'helm-ag)
-;(define-key evil-normal-state-map (kbd ",b") 'helm-mini)
-;(define-key evil-normal-state-map (kbd ",k") 'kill-buffer)
-;(define-key evil-normal-state-map (kbd ",r") 'package-refresh-contents)
-;(define-key evil-normal-state-map (kbd ",p") 'package-list-packages)
-;(define-key evil-normal-state-map (kbd ",m") 'helm-M-x)
+(define-key evil-normal-state-map (kbd "<SPC>e") 'find-file)
+(define-key evil-normal-state-map (kbd "<SPC>k") 'kill-buffer)
+(define-key evil-normal-state-map (kbd "<SPC>s") 'eshell)
+(define-key evil-normal-state-map (kbd "<SPC>[") 'previous-buffer)
+(define-key evil-normal-state-map (kbd "<SPC>]") 'next-buffer)
+(define-key evil-normal-state-map (kbd "<SPC>f") 'projectile-find-file)
+(define-key evil-normal-state-map (kbd "<SPC>x") 'projectile-kill-buffers)
+(define-key evil-normal-state-map (kbd "<SPC>p") 'projectile-switch-project)
+(define-key evil-normal-state-map (kbd "<SPC>o") 'project-explorer-toggle)
+(define-key evil-normal-state-map (kbd "<SPC>m") 'helm-M-x)
+(define-key evil-normal-state-map (kbd "<SPC>a") 'helm-ag)
+(define-key evil-normal-state-map (kbd "<SPC>b") 'helm-mini)
+(define-key evil-normal-state-map (kbd "<SPC>q") 'sql:server-connect)
 ;(define-key evil-normal-state-map (kbd "q") nil)
 
-;; leader bindings
-(evil-leader/set-leader "<SPC>")
-(evil-leader/set-key
-  "e" 'find-file
-  "s" 'eshell
-  "f" 'projectile-find-file
-  "a" 'helm-ag
-  "b" 'helm-mini
-  "k" 'kill-buffer
-  "r" 'package-refresh-contents
-  "p" 'package-list-packages
-  "m" 'helm-M-x
-  "[" 'previous-buffer
-  "]" 'next-buffer)
+;; cl-evil-mode
+
+;; clj-evil-mode
+(define-minor-mode clj-evil-mode
+  "Clojure Evil minor mode"
+  :keymap (make-sparse-keymap))
+
+(with-eval-after-load "~/.emacs.d/config/program_init.el"
+  (evil-define-key 'normal clj-evil-mode-map ",j" #'cider-jack-in)
+  (evil-define-key 'normal clj-evil-mode-map ",e" #'cider-eval-last-sexp)
+  (evil-define-key 'normal clj-evil-mode-map ",x" #'cider-eval-defun-at-point)
+  (evil-define-key 'normal clj-evil-mode-map ",r" #'cider-eval-region)
+  (evil-define-key 'normal clj-evil-mode-map ",k" #'cider-eval-buffer)
+  (evil-define-key 'normal clj-evil-mode-map ",s" #'cider-eval-ns-form)
+  (evil-define-key 'normal clj-evil-mode-map ",l" #'cider-load-file)
+  (evil-define-key 'normal clj-evil-mode-map ",n" #'cider-repl-set-ns)
+  (evil-define-key 'normal clj-evil-mode-map ",." #'cider-find-var)
+  (evil-define-key 'normal clj-evil-mode-map ",," #'cider-jump-back)
+  (evil-define-key 'normal clj-evil-mode-map ",z" #'cider-switch-to-repl-buffer)
+  (add-hook 'clojure-mode-hook 'clj-evil-mode))
+
+;; py-evil-mode
+(define-minor-mode py-evil-mode
+  "Python Evil minor mode"
+  :keymap (make-sparse-keymap))
+
+(with-eval-after-load "~/.emacs.d/config/program_init.el"
+  (evil-define-key 'normal py-evil-mode-map ",g" #'shell-plus-toggle)
+  (evil-define-key 'normal py-evil-mode-map ",t" #'ipdb:insert-trace)
+  (evil-define-key 'normal py-evil-mode-map ",d" #'jedi:jump-to-definition)
+  (evil-define-key 'normal py-evil-mode-map ",b" #'jedi:jump-back)
+  (evil-define-key 'normal py-evil-mode-map ",k" #'jedi:show-doc)
+  (add-hook 'python-mode-hook 'py-evil-mode))
