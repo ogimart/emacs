@@ -18,7 +18,7 @@
         ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
         ;("gnu" . "https://elpa.gnu.org/packages/")
         ;("org" . "http://orgmode.org/elpa/")
-        ;("melpa" . "http://melpa.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
         ))
 (setq package-enable-at-startup nil)
 (package-initialize)

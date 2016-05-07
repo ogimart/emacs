@@ -57,14 +57,14 @@
 
 ;; colors
 (setq ns-use-srgb-colorspace t)
-;(load-theme 'noctilux t)
-(load-theme 'atom-one-dark t)
+;(load-theme 'atom-one-dark t)
+(load-theme 'noctilux t)
 
 ;; cursor & paren match
 (blink-cursor-mode 0)
 (set-face-attribute 'show-paren-match-face nil
                     :foreground "white smoke"
-                    :background "dim grey")
+                    :background "dim gray")
 
 ;; font
 (defun set-small-font ()
